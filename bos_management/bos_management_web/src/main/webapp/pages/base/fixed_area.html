@@ -32,8 +32,38 @@
 			}
 			
 			function doAssociations(){
-				$('#customerWindow').window('open');
-			}
+                //获取当前数据表格所有选中的行
+                var rows = $("#grid").datagrid("getSelections");
+                if(rows.length == 1){
+                    $('#customerWindow').window('open');
+                    //清空下拉框数据
+                    $("#noassociationSelect").empty();
+                    $("#associationSelect").empty();
+                    //查询未关联定区的客户
+                    $.post('../../fixedAreaAction_findByFixedAreaIdIsNull.action',function(data){
+                        if(data != ""){
+                            for (var i = 0; i < data.length; i++) {
+                                //解析服务端响应的json数据，展示到下拉框中
+                                $("#noassociationSelect").append("<option value='"+data[i].id+"'>"+data[i].username+"</option>");
+                            }
+                        }
+                    },"json");
+
+                    //查询已关联定区的客户
+                    $.post('../../fixedAreaAction_findByFixedAreaId.action',{"id":rows[0].id},function(data) {
+                        if(data != ""){
+                            for (var i = 0; i < data.length; i++) {
+                                //解析服务端响应的json数据，展示到下拉框中
+                                $("#associationSelect").append("<option value='" + data[i].id + "'>" + data[i].username + "</option>");
+                            }
+                        }
+                    },"json");
+                }
+                else
+                {
+                    $.messager.alert("提示信息","请选择一条定区数据","warning");
+                }
+            }
 			
 			//工具栏
 			var toolbar = [ {
@@ -280,6 +310,15 @@
 			<div style="height:31px;overflow:hidden;" split="false" border="false">
 				<div class="datagrid-toolbar">
 					<a id="save" icon="icon-save" href="#" class="easyui-linkbutton" plain="true">保存</a>
+					<script type="text/javascript">
+						$(function () {
+							$("#save").click(function () {
+								if($("#fixedAreaForm").form("validate")){
+									$("#fixedAreaForm").submit();
+								}
+                            });
+                        });
+					</script>
 				</div>
 			</div>
 
@@ -375,7 +414,28 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="3"><a id="associationBtn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">关联客户</a> </td>
+							<td colspan="3"><a id="associationBtn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">关联客户</a>
+								<script type="text/javascript">
+                                    $(function () {
+                                        var rows = $("#grid").datagrid('getSelections');
+                                        $("#toRight").click(function(){
+                                            $("#associationSelect").append($("#noassociationSelect option:selected"));
+                                        });
+                                        $("#toLeft").click(function(){
+                                            $("#noassociationSelect").append($("#associationSelect option:selected"));
+                                        });
+                                        $("#associationBtn").click(function () {
+											if($("#associationBtn").form("validate")){
+                                                //选中下拉框所有option值
+                                                $("#associationSelect option").attr("selected","selected");
+                                                //为隐藏域定区id赋值
+                                                $("#customerFixedAreaId").val(rows[0].id);
+                                                $("#customerForm").submit();
+                                            }
+                                        });
+                                    });
+								</script>
+							</td>
 						</tr>
 					</table>
 				</form>
@@ -391,12 +451,12 @@
 					<table class="table-edit" width="80%" align="center">
 						<tr class="title">
 							<td colspan="2">关联快递员</td>
-						</tr> 
+						</tr>
 						<tr>
 							<td>选择快递员</td>
 							<td>
 								<!-- 存放定区编号 -->
-								<input type="hidden" name="id" id="courierFixedAreaId" />
+								<input type="hidden" id="courierFixedAreaId" name="id"/>
 								<input data-options="ditable:false, url:'../../courierAction_listajax.action',valueField:'id',textField:'name'"
 									 type="text" name="courierId" class="easyui-combobox" required="true" />
 							</td>
@@ -404,17 +464,23 @@
 						<tr>
 							<td>选择收派时间</td>
 							<td>
-								<select required="true" class="easyui-combobox" name="takeTimeId">
-									<option>请选择</option>
-									<option value="1">北京早班</option>
-									<option value="2">北京晚班</option>
-								</select>
+								<input data-options="ditable:false, url:'../../takeTimeAction_listajax.action',valueField:'id',textField:'name'"
+									   type="text" name="takeTimeId" class="easyui-combobox" required="true" />
 								<!-- <input type="text" name="takeTimeId" class="easyui-combobox" required="true" /> -->
 							</td>
 						</tr>
 						<tr>
 							<td colspan="3">
 								<a id="associationCourierBtn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">关联快递员</a>
+								<script type="text/javascript">
+										$(function () {
+											$("#associationCourierBtn").click(function () {
+                                                var rows = $("#grid").datagrid('getSelections');
+                                                $("#courierFixedAreaId").val(rows[0].id);
+                                                $("#courierForm").submit();
+                                            });
+                                        });
+								</script>
 							 </td>
 						</tr>
 					</table>
@@ -422,5 +488,4 @@
 			</div>
 		</div>
 	</body>
-
 </html>

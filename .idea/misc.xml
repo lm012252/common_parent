@@ -2,13 +2,19 @@
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/bos_crm" />
+    <file type="web" url="file://$PROJECT_DIR$/bos_fore" />
     <file type="web" url="file://$PROJECT_DIR$/bos_management/bos_management_web" />
+    <file type="web" url="file://$PROJECT_DIR$/bos_sms" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/bos_management/pom.xml" />
+        <option value="$PROJECT_DIR$/bos_crm/pom.xml" />
+        <option value="$PROJECT_DIR$/bos_fore/pom.xml" />
+        <option value="$PROJECT_DIR$/bos_sms/pom.xml" />
       </list>
     </option>
   </component>

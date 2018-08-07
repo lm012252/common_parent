@@ -12,6 +12,15 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+  <!--  spring data jpa的过滤懒加载方式-->
+  <filter>
+    <filter-name>openEntityManager</filter-name>
+    <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>openEntityManager</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
   <!--配置struts2框架的过滤器-->
   <filter>
     <filter-name>struts2</filter-name>
@@ -19,6 +28,14 @@
   </filter>
   <filter-mapping>
     <filter-name>struts2</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>*.action</url-pattern>
   </filter-mapping>
+  <servlet>
+      <servlet-name>cxf</servlet-name>
+      <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>cxf</servlet-name>
+      <url-pattern>/cxf/*</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -119,17 +119,17 @@
 					return "" ;
 				}
 			}, {
-				field : 'addresskey',
+				field : 'keyWords',
 				title : '关键字',
 				width : 120,
 				align : 'center'
 			}, {
-				field : 'startnum',
+				field : 'startNum',
 				title : '起始号',
 				width : 100,
 				align : 'center'
 			}, {
-				field : 'endnum',
+				field : 'endNum',
 				title : '终止号',
 				width : 100,
 				align : 'center'
@@ -159,7 +159,7 @@
 					pageList: [30,50,100],
 					pagination : true,
 					toolbar : toolbar,
-					url : "../../data/sub_area.json",
+					url : "../../subareaAction_pageQuery.action",
 					idField : 'id',
 					columns : columns,
 					onDblClickRow : doDblClickRow
@@ -215,6 +215,15 @@
 			<div style="height:31px;overflow:hidden;" split="false" border="false">
 				<div class="datagrid-toolbar">
 					<a id="save" icon="icon-save" href="#" class="easyui-linkbutton" plain="true">保存</a>
+					<script type="text/javascript">
+						$(function () {
+							$("#save").click(function () {
+								if($("#subareaForm").form("validate")){
+								    $("#subareaForm").submit();
+								}
+                            });
+                        });
+					</script>
 				</div>
 			</div>
 
@@ -228,8 +237,8 @@
 							<td>选择区域</td>
 							<td>
 								<input class="easyui-combobox" name="area.id"
-									 data-options="valueField:'id',textField:'name',
-									 url:''" />
+									 data-options="mode:'remote',valueField:'id',textField:'name',
+									 url:'../../areaAction_findAll.action'" />
 							</td>
 						</tr>
 						<tr>
@@ -316,9 +325,9 @@
 						</tr>
 						<tr>
 							<td>关键字</td>
-							<td>
-								<input type="text" name="addresskey" class="easyui-validatebox" required="true" />
-							</td>
+						<td>
+							<input type="text" name="addresskey" class="easyui-validatebox" required="true" />
+						</td>
 						</tr>
 						<tr>
 							<td colspan="2"><a id="btn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a> </td>
