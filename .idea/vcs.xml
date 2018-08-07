@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
-    <mapping directory="" vcs="svn" />
+    <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/bos_crm" vcs="svn" />
-    <mapping directory="$PROJECT_DIR$/bos_fore" vcs="svn" />
-    <mapping directory="$PROJECT_DIR$/bos_sms" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/bos_crm" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/bos_fore" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/bos_sms" vcs="Git" />
   </component>
 </project>
