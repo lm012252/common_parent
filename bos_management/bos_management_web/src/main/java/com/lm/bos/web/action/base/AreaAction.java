@@ -41,7 +41,7 @@ public class AreaAction extends CommonAction<Area> {
 
     @Action(value = "areaAction_findAll")
     public String findAll() throws IOException {
-        List<Area> list=null;
+        List<Area> list = null;
         System.out.println(q);
         if(StringUtils.isNoneBlank(q)){
             list = areaService.findByQ("%"+q.toUpperCase()+"%");
