@@ -86,4 +86,40 @@
             <ref bean="orderService"></ref>
         </jaxws:serviceBean>
     </jaxws:server>
+
+    <!--注入bosRealm-->
+    <bean id="bosRealm" class="com.lm.bos.web.action.realm.BosRealm" />
+    <!--注册安全管理器-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="bosRealm"></property>
+    </bean>
+    <!--注册shiroFilter-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!--配置安全管理器-->
+        <property name="securityManager" ref="securityManager"></property>
+        <!--配置权限相关的页面
+            1.登录页面
+            2.登录成功页面
+            3.没有权限的页面
+        -->
+        <property name="loginUrl" value="/login.html"></property>
+        <property name="successUrl" value="/index.html"></property>
+        <property name="unauthorizedUrl" value="/unauthorized.html"></property>
+        <!-- 权限规则相关配置
+                authc:只要认证才可以访问功能
+                anon：匿名过滤器 （不需要权限访问功能）
+
+                注意：有顺序问题
+                -->
+        <property name="filterChainDefinitions">
+            <value>
+                /css/** = anon
+                /images/** = anon
+                /js/** = anon
+                /validatecode.jsp* = anon
+                /userAction_login.action = anon
+                /**=authc
+            </value>
+        </property>
+    </bean>
 </beans>

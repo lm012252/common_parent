@@ -1,11 +1,9 @@
 package com.lm.bos.web.action.base;
 
-import com.alibaba.fastjson.JSON;
 import com.lm.bos.domain.base.Area;
 import com.lm.bos.service.base.IAreaService;
 import com.lm.bos.web.action.common.CommonAction;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -19,9 +17,7 @@ import org.springframework.stereotype.Controller;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Namespace("/")
 @ParentPackage("struts-default")
